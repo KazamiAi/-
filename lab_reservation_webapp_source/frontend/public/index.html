@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实验室预约系统 - 登录</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <h2>实验室预约系统</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">用户名</label>
+                    <input type="text" id="username" name="username" required autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">密码</label>
+                    <input type="password" id="password" name="password" required autocomplete="current-password">
+                </div>
+                <button type="submit" class="login-btn">登录</button>
+                <div id="error-message" class="error-message"></div>
+            </form>
+            <div class="login-info">
+                <p>管理员账号: admin / 123456</p>
+                <p>教师账号: teacher1 / 123456</p>
+                <p>学生账号: student1 / 123456</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/utils/api.js"></script>
+    <script src="js/auth/login.js"></script>
+    <!-- 测试localStorage可用性的脚本 -->
+    <script>
+        // 页面加载时测试localStorage
+        window.addEventListener('load', function() {
+            console.log('页面加载完成，测试localStorage可用性...');
+            
+            try {
+                // 测试localStorage是否可用
+                localStorage.setItem('test_key', 'test_value');
+                const testValue = localStorage.getItem('test_key');
+                localStorage.removeItem('test_key');
+                
+                console.log('localStorage可用，测试值:', testValue);
+                
+                // 检查当前已有的authToken
+                const currentToken = localStorage.getItem('authToken');
+                console.log('当前已有的authToken:', currentToken);
+                
+                // 检查当前已有的userInfo
+                const currentUserInfo = localStorage.getItem('userInfo');
+                console.log('当前已有的userInfo:', currentUserInfo);
+            } catch (error) {
+                console.error('localStorage不可用:', error);
+                alert('localStorage不可用，登录功能可能无法正常工作');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实验室预约系统 - 统计报表</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 侧边栏 -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>实验室预约系统</h1>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html">首页</a></li>
+                <li><a href="reservations.html">我的预约</a></li>
+                <li><a href="create-reservation.html">创建预约</a></li>
+                <li id="labs-menu"><a href="laboratories.html">实验室管理</a></li>
+                <li id="devices-menu"><a href="devices.html">设备管理</a></li>
+                <li id="all-reservations-menu"><a href="all-reservations.html">预约审批</a></li>
+                <li id="reports-menu"><a href="reports.html" class="active">统计报表</a></li>
+                <li><a href="profile.html">个人信息</a></li>
+            </ul>
+        </aside>
+
+        <!-- 主内容区域 -->
+        <main class="main-content">
+            <!-- 顶部导航 -->
+            <header class="header">
+                <h2>统计报表</h2>
+                <div class="user-info">
+                    <span id="user-name">--</span>
+                    <span id="user-role">--</span>
+                    <button id="logout-btn" class="logout-btn">退出登录</button>
+                </div>
+            </header>
+
+            <!-- 时间筛选 -->
+            <div class="card" style="margin-bottom: 20px;">
+                <div class="card-header">
+                    <h3 class="card-title">时间范围选择</h3>
+                </div>
+                <div class="card-body">
+                    <div class="filter-controls">
+                        <select id="time-range-filter">
+                            <option value="week">最近一周</option>
+                            <option value="month">最近一个月</option>
+                            <option value="quarter">最近三个月</option>
+                            <option value="year">最近一年</option>
+                        </select>
+                        <button id="apply-filter-btn" class="btn btn-primary">应用筛选</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 统计卡片 -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h4>总预约次数</h4>
+                    <p id="total-reservations">0</p>
+                </div>
+                <div class="stat-card">
+                    <h4>已批准预约</h4>
+                    <p id="approved-reservations">0</p>
+                </div>
+                <div class="stat-card">
+                    <h4>平均使用率</h4>
+                    <p id="average-usage">0%</p>
+                </div>
+                <div class="stat-card">
+                    <h4>最繁忙实验室</h4>
+                    <p id="busiest-lab">--</p>
+                </div>
+            </div>
+
+            <!-- 图表区域 -->
+            <div class="card" style="margin-top: 20px;">
+                <div class="card-header">
+                    <h3 class="card-title">实验室使用统计</h3>
+                </div>
+                <div class="card-body">
+                    <div id="labs-usage-chart">
+                        <!-- 图表将通过JavaScript动态生成 -->
+                        <div class="chart-placeholder">
+                            <p>加载中...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 预约统计表格 -->
+            <div class="card" style="margin-top: 20px;">
+                <div class="card-header">
+                    <h3 class="card-title">预约统计详情</h3>
+                </div>
+                <div class="card-body">
+                    <div class="tab-container">
+                        <div class="tabs">
+                            <button class="tab-btn active" data-tab="by-status">按状态统计</button>
+                            <button class="tab-btn" data-tab="by-department">按部门统计</button>
+                            <button class="tab-btn" data-tab="trend">月度趋势</button>
+                        </div>
+                        <div class="tab-content active" id="by-status-content">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>状态</th>
+                                        <th>数量</th>
+                                        <th>占比</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="status-stats-body">
+                                    <tr>
+                                        <td colspan="3" style="text-align: center;">加载中...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-content" id="by-department-content">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>部门</th>
+                                        <th>预约次数</th>
+                                        <th>占比</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="department-stats-body">
+                                    <tr>
+                                        <td colspan="3" style="text-align: center;">加载中...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-content" id="trend-content">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>月份</th>
+                                        <th>预约次数</th>
+                                        <th>同比增长</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="trend-stats-body">
+                                    <tr>
+                                        <td colspan="3" style="text-align: center;">加载中...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/utils/api.js"></script>
+    <script src="js/utils/auth.js"></script>
+    <script src="js/reports.js"></script>
+</body>
+</html>

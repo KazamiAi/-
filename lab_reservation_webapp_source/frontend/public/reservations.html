@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实验室预约系统 - 我的预约</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 侧边栏 -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>实验室预约系统</h1>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html">首页</a></li>
+                <li><a href="reservations.html" class="active">我的预约</a></li>
+                <li><a href="create-reservation.html">创建预约</a></li>
+                <li id="labs-menu"><a href="laboratories.html">实验室管理</a></li>
+                <li id="devices-menu"><a href="devices.html">设备管理</a></li>
+                <li id="all-reservations-menu"><a href="all-reservations.html">预约审批</a></li>
+                <li id="reports-menu"><a href="reports.html">统计报表</a></li>
+                <li><a href="profile.html">个人信息</a></li>
+            </ul>
+        </aside>
+
+        <!-- 主内容区域 -->
+        <main class="main-content">
+            <!-- 顶部导航 -->
+            <header class="header">
+                <h2>我的预约</h2>
+                <div class="user-info">
+                    <span id="user-name">--</span>
+                    <span id="user-role">--</span>
+                    <button id="logout-btn" class="logout-btn">退出登录</button>
+                </div>
+            </header>
+
+            <!-- 内容卡片 -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">我的预约列表</h3>
+                    <a href="create-reservation.html" class="btn btn-primary">创建新预约</a>
+                </div>
+                
+                <!-- 筛选条件 -->
+                <div class="filter-section">
+                    <div class="form-row">
+                        <div class="form-col">
+                            <select id="status-filter" class="form-control">
+                                <option value="">全部状态</option>
+                                <option value="待审批">待审批</option>
+                                <option value="已审批">已审批</option>
+                                <option value="已拒绝">已拒绝</option>
+                                <option value="已取消">已取消</option>
+                                <option value="进行中">进行中</option>
+                                <option value="已完成">已完成</option>
+                            </select>
+                        </div>
+                        <div class="form-col">
+                            <input type="date" id="date-filter" class="form-control">
+                        </div>
+                        <div class="form-col">
+                            <button id="filter-btn" class="btn btn-primary">筛选</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 预约列表 -->
+                <div class="reservations-list">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>实验室</th>
+                                <th>日期</th>
+                                <th>时间段</th>
+                                <th>用途</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reservations-table-body">
+                            <tr>
+                                <td colspan="6" style="text-align: center;">加载中...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/utils/api.js"></script>
+    <script src="js/utils/auth.js"></script>
+    <script src="js/reservations.js"></script>
+</body>
+</html>

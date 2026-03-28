@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实验室预约系统 - 设备管理</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 侧边栏 -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>实验室预约系统</h1>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html">首页</a></li>
+                <li><a href="reservations.html">我的预约</a></li>
+                <li><a href="create-reservation.html">创建预约</a></li>
+                <li id="labs-menu"><a href="laboratories.html">实验室管理</a></li>
+                <li id="devices-menu"><a href="devices.html" class="active">设备管理</a></li>
+                <li id="all-reservations-menu"><a href="all-reservations.html">预约审批</a></li>
+                <li id="reports-menu"><a href="reports.html">统计报表</a></li>
+                <li><a href="profile.html">个人信息</a></li>
+            </ul>
+        </aside>
+
+        <!-- 主内容区域 -->
+        <main class="main-content">
+            <!-- 顶部导航 -->
+            <header class="header">
+                <h2>设备管理</h2>
+                <div class="user-info">
+                    <span id="user-name">--</span>
+                    <span id="user-role">--</span>
+                    <button id="logout-btn" class="logout-btn">退出登录</button>
+                </div>
+            </header>
+
+            <!-- 内容区域 -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">设备列表</h3>
+                    <div class="card-actions">
+                        <div class="search-box">
+                            <input type="text" id="search-input" placeholder="搜索设备名称或型号">
+                            <button id="search-btn" class="btn btn-secondary">搜索</button>
+                        </div>
+                        <button id="add-device-btn" class="btn btn-primary">添加设备</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>设备ID</th>
+                                <th>设备名称</th>
+                                <th>型号</th>
+                                <th>所在实验室</th>
+                                <th>状态</th>
+                                <th>购买日期</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="devices-table-body">
+                            <tr>
+                                <td colspan="7" style="text-align: center;">加载中...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 设备详情模态框 -->
+    <div id="device-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="modal-title">设备详情</h4>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="device-details">
+                    <!-- 设备详情将通过JavaScript动态加载 -->
+                    <p>加载中...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 添加设备模态框 -->
+    <div id="add-device-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="add-modal-title">添加设备</h4>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="add-device-form">
+                    <div class="form-group">
+                        <label for="device-name">设备名称</label>
+                        <input type="text" id="device-name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="device-model">设备型号</label>
+                        <input type="text" id="device-model" name="model" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="device-serial">设备序列号</label>
+                        <input type="text" id="device-serial" name="serial_number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="device-lab">所在实验室</label>
+                        <select id="device-lab" name="lab_id" required>
+                            <!-- 实验室列表将通过JavaScript动态加载 -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="purchase-date">购买日期</label>
+                        <input type="date" id="purchase-date" name="purchase_date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="device-status">设备状态</label>
+                        <select id="device-status" name="status" required>
+                            <option value="正常">正常</option>
+                            <option value="维护中">维护中</option>
+                            <option value="不可用">不可用</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="device-description">设备描述</label>
+                        <textarea id="device-description" name="description" rows="3"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="cancel-add-btn" class="btn btn-secondary">取消</button>
+                        <button type="submit" id="submit-add-btn" class="btn btn-primary">提交</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 编辑设备模态框 -->
+    <div id="edit-device-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="edit-modal-title">编辑设备</h4>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="edit-device-form">
+                    <input type="hidden" id="edit-device-id" name="device_id">
+                    <div class="form-group">
+                        <label for="edit-device-name">设备名称</label>
+                        <input type="text" id="edit-device-name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-device-model">设备型号</label>
+                        <input type="text" id="edit-device-model" name="model" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-device-lab">所在实验室</label>
+                        <select id="edit-device-lab" name="lab_id" required>
+                            <!-- 实验室列表将通过JavaScript动态加载 -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-purchase-date">购买日期</label>
+                        <input type="date" id="edit-purchase-date" name="purchase_date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-device-status">设备状态</label>
+                        <select id="edit-device-status" name="status" required>
+                            <option value="正常">正常</option>
+                            <option value="维护中">维护中</option>
+                            <option value="不可用">不可用</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-device-description">设备描述</label>
+                        <textarea id="edit-device-description" name="description" rows="3"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="cancel-edit-btn" class="btn btn-secondary">取消</button>
+                        <button type="submit" id="submit-edit-btn" class="btn btn-primary">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/utils/api.js"></script>
+    <script src="js/utils/auth.js"></script>
+    <script src="js/devices.js"></script>
+</body>
+</html>

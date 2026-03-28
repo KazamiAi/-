@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实验室预约系统 - 预约审批</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 侧边栏 -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>实验室预约系统</h1>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html">首页</a></li>
+                <li><a href="reservations.html">我的预约</a></li>
+                <li><a href="create-reservation.html">创建预约</a></li>
+                <li id="labs-menu"><a href="laboratories.html">实验室管理</a></li>
+                <li id="devices-menu"><a href="devices.html">设备管理</a></li>
+                <li id="all-reservations-menu"><a href="all-reservations.html" class="active">预约审批</a></li>
+                <li id="reports-menu"><a href="reports.html">统计报表</a></li>
+                <li><a href="profile.html">个人信息</a></li>
+            </ul>
+        </aside>
+
+        <!-- 主内容区域 -->
+        <main class="main-content">
+            <!-- 顶部导航 -->
+            <header class="header">
+                <h2>预约审批</h2>
+                <div class="user-info">
+                    <span id="user-name">--</span>
+                    <span id="user-role">--</span>
+                    <button id="logout-btn" class="logout-btn">退出登录</button>
+                </div>
+            </header>
+
+            <!-- 内容区域 -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">预约列表</h3>
+                    <div class="card-actions">
+                        <div class="filter-box">
+                            <select id="status-filter">
+                                <option value="all">全部状态</option>
+                                <option value="pending">待审批</option>
+                                <option value="approved">已批准</option>
+                                <option value="rejected">已拒绝</option>
+                                <option value="canceled">已取消</option>
+                            </select>
+                            <select id="lab-filter">
+                                <option value="all">全部实验室</option>
+                                <!-- 实验室选项将通过JavaScript动态加载 -->
+                            </select>
+                            <button id="filter-btn" class="btn btn-secondary">筛选</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>预约ID</th>
+                                <th>申请人</th>
+                                <th>实验室</th>
+                                <th>日期</th>
+                                <th>时间段</th>
+                                <th>用途</th>
+                                <th>状态</th>
+                                <th>申请时间</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reservations-table-body">
+                            <tr>
+                                <td colspan="9" style="text-align: center;">加载中...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 预约详情模态框 -->
+    <div id="reservation-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="modal-title">预约详情</h4>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="reservation-details">
+                    <!-- 预约详情将通过JavaScript动态加载 -->
+                    <p>加载中...</p>
+                </div>
+                <div id="approval-actions" style="display: none; margin-top: 20px;">
+                    <button id="approve-btn" class="btn btn-primary">批准</button>
+                    <button id="reject-btn" class="btn btn-danger">拒绝</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/utils/api.js"></script>
+    <script src="js/utils/auth.js"></script>
+    <script src="js/all-reservations.js"></script>
+</body>
+</html>

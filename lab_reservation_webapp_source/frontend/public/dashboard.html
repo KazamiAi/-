@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实验室预约系统 - 首页</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 侧边栏 -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>实验室预约系统</h1>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html" class="active">首页</a></li>
+                <li><a href="reservations.html">我的预约</a></li>
+                <li><a href="create-reservation.html">创建预约</a></li>
+                <li id="labs-menu"><a href="laboratories.html">实验室管理</a></li>
+                <li id="devices-menu"><a href="devices.html">设备管理</a></li>
+                <li id="all-reservations-menu"><a href="all-reservations.html">预约审批</a></li>
+                <li id="reports-menu"><a href="reports.html">统计报表</a></li>
+                <li><a href="profile.html">个人信息</a></li>
+            </ul>
+        </aside>
+
+        <!-- 主内容区域 -->
+        <main class="main-content">
+            <!-- 顶部导航 -->
+            <header class="header">
+                <h2>欢迎使用实验室预约系统</h2>
+                <div class="user-info">
+                    <span id="user-name">--</span>
+                    <span id="user-role">--</span>
+                    <button id="logout-btn" class="logout-btn">退出登录</button>
+                </div>
+            </header>
+
+            <!-- 内容卡片 -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">系统概览</h3>
+                </div>
+                <div class="card-body">
+                    <div class="dashboard-stats">
+                        <div class="stat-card">
+                            <h4>可用实验室</h4>
+                            <p id="available-labs-count">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <h4>待处理预约</h4>
+                            <p id="pending-reservations-count">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <h4>我的预约</h4>
+                            <p id="my-reservations-count">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">最近预约</h3>
+                    <div class="card-actions">
+                        <a href="reservations.html" class="btn btn-primary">查看全部</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>实验室</th>
+                                <th>日期</th>
+                                <th>时间段</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recent-reservations-body">
+                            <tr>
+                                <td colspan="5" style="text-align: center;">加载中...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/utils/api.js"></script>
+    <script src="js/utils/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

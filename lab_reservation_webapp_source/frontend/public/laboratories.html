@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实验室预约系统 - 实验室管理</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 侧边栏 -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>实验室预约系统</h1>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html">首页</a></li>
+                <li><a href="reservations.html">我的预约</a></li>
+                <li><a href="create-reservation.html">创建预约</a></li>
+                <li id="labs-menu"><a href="laboratories.html" class="active">实验室管理</a></li>
+                <li id="devices-menu"><a href="devices.html">设备管理</a></li>
+                <li id="all-reservations-menu"><a href="all-reservations.html">预约审批</a></li>
+                <li id="reports-menu"><a href="reports.html">统计报表</a></li>
+                <li><a href="profile.html">个人信息</a></li>
+            </ul>
+        </aside>
+
+        <!-- 主内容区域 -->
+        <main class="main-content">
+            <!-- 顶部导航 -->
+            <header class="header">
+                <h2>实验室管理</h2>
+                <div class="user-info">
+                    <span id="user-name">--</span>
+                    <span id="user-role">--</span>
+                    <button id="logout-btn" class="logout-btn">退出登录</button>
+                </div>
+            </header>
+
+            <!-- 内容区域 -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">实验室列表</h3>
+                    <div class="card-actions">
+                        <div class="search-box">
+                            <input type="text" id="search-input" placeholder="搜索实验室名称或位置">
+                            <button id="search-btn" class="btn btn-secondary">搜索</button>
+                        </div>
+                        <button id="add-lab-btn" class="btn btn-primary">添加实验室</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>实验室ID</th>
+                                <th>实验室名称</th>
+                                <th>位置</th>
+                                <th>容量</th>
+                                <th>状态</th>
+                                <th>设备数量</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="labs-table-body">
+                            <tr>
+                                <td colspan="7" style="text-align: center;">加载中...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 实验室详情模态框 -->
+    <div id="lab-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="modal-title">实验室详情</h4>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="lab-details">
+                    <!-- 实验室详情将通过JavaScript动态加载 -->
+                    <p>加载中...</p>
+                </div>
+                <div class="lab-devices-section">
+                    <h5>设备列表</h5>
+                    <div id="lab-devices-list">
+                        <p>加载中...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 添加实验室模态框 -->
+    <div id="add-lab-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="add-lab-modal-title">添加实验室</h4>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="add-lab-form">
+                    <div class="form-group">
+                        <label for="lab-name">实验室名称:</label>
+                        <input type="text" id="lab-name" name="lab_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lab-location">位置:</label>
+                        <input type="text" id="lab-location" name="location" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lab-capacity">容量:</label>
+                        <input type="number" id="lab-capacity" name="capacity" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lab-description">描述:</label>
+                        <textarea id="lab-description" name="description" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="lab-status">状态:</label>
+                        <select id="lab-status" name="status" required>
+                            <option value="1">可用</option>
+                            <option value="0">维护中</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="lab-manager-id">负责人ID (可选):</label>
+                        <input type="number" id="lab-manager-id" name="manager_id" min="0">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancel-add-lab">取消</button>
+                        <button type="submit" class="btn btn-primary">添加实验室</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 编辑实验室模态框 -->
+    <div id="edit-lab-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="edit-lab-modal-title">编辑实验室</h4>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="edit-lab-form">
+                    <input type="hidden" id="edit-lab-id" name="lab_id">
+                    <div class="form-group">
+                        <label for="edit-lab-name">实验室名称:</label>
+                        <input type="text" id="edit-lab-name" name="lab_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-lab-location">位置:</label>
+                        <input type="text" id="edit-lab-location" name="location" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-lab-capacity">容量:</label>
+                        <input type="number" id="edit-lab-capacity" name="capacity" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-lab-description">描述:</label>
+                        <textarea id="edit-lab-description" name="description" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-lab-status">状态:</label>
+                        <select id="edit-lab-status" name="status" required>
+                            <option value="1">可用</option>
+                            <option value="0">维护中</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-lab-manager-id">负责人ID (可选):</label>
+                        <input type="number" id="edit-lab-manager-id" name="manager_id" min="0">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancel-edit-lab">取消</button>
+                        <button type="submit" class="btn btn-primary">保存修改</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/utils/api.js"></script>
+    <script src="js/utils/auth.js"></script>
+    <script src="js/laboratories.js"></script>
+</body>
+</html>

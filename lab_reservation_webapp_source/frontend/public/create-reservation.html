@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实验室预约系统 - 创建预约</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 侧边栏 -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>实验室预约系统</h1>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html">首页</a></li>
+                <li><a href="reservations.html">我的预约</a></li>
+                <li><a href="create-reservation.html" class="active">创建预约</a></li>
+                <li id="labs-menu"><a href="laboratories.html">实验室管理</a></li>
+                <li id="devices-menu"><a href="devices.html">设备管理</a></li>
+                <li id="all-reservations-menu"><a href="all-reservations.html">预约审批</a></li>
+                <li id="reports-menu"><a href="reports.html">统计报表</a></li>
+                <li><a href="profile.html">个人信息</a></li>
+            </ul>
+        </aside>
+
+        <!-- 主内容区域 -->
+        <main class="main-content">
+            <!-- 顶部导航 -->
+            <header class="header">
+                <h2>创建预约</h2>
+                <div class="user-info">
+                    <span id="user-name">--</span>
+                    <span id="user-role">--</span>
+                    <button id="logout-btn" class="logout-btn">退出登录</button>
+                </div>
+            </header>
+
+            <!-- 创建预约表单 -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">预约信息</h3>
+                </div>
+                
+                <form id="createReservationForm">
+                    <div class="form-row">
+                        <div class="form-col">
+                            <label for="lab-select">选择实验室 *</label>
+                            <select id="lab-select" class="form-control" required>
+                                <option value="">请选择实验室</option>
+                            </select>
+                        </div>
+                        <div class="form-col">
+                            <label for="reservation-date">预约日期 *</label>
+                            <input type="date" id="reservation-date" class="form-control" required min="">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-col">
+                            <label for="start-time">开始时间 *</label>
+                            <select id="start-time" class="form-control" required>
+                                <option value="">请选择开始时间</option>
+                            </select>
+                        </div>
+                        <div class="form-col">
+                            <label for="end-time">结束时间 *</label>
+                            <select id="end-time" class="form-control" required>
+                                <option value="">请选择结束时间</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="purpose">预约用途 *</label>
+                        <textarea id="purpose" class="form-control" rows="3" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="devices-select">需要设备（可选）</label>
+                        <select id="devices-select" class="form-control" multiple style="height: 120px;">
+                            <!-- 动态加载可选设备 -->
+                            <option value="">请先选择实验室</option>
+                        </select>
+                        <small class="form-text text-muted">按住Ctrl键可多选</small>
+                    </div>
+                    
+                    <div id="error-message" class="error-message"></div>
+                    <div id="success-message" class="success-message"></div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">提交预约</button>
+                        <a href="reservations.html" class="btn btn-secondary">取消</a>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/utils/api.js"></script>
+    <script src="js/utils/auth.js"></script>
+    <script src="js/create-reservation.js"></script>
+</body>
+</html>
